@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <script>
+            let timeout;
+            function debounceSum(){
+                //clear prev timeout
+                clearTimeout(timeout);
+
+                //start new timeout
+                timeout = setTimeout(function(){
+                    sum();
+                }, 500);
+            }
+
+            function sum(){
+
+                const a = document.getElementById("firstNum").value;
+                const b = document.getElementById("secondNum").value;
+                
+                fetch("http://localhost:3000/sum?a=" +a +"&b=" +b)
+                .then(function(response){
+                    response.text()
+                        .then(function(ans){
+                            document.getElementById("finalsum").innerHTML = ans;
+                        })
+                })
+            }
+        </script>        
+        <body>
+            <input oninput="debounceSum()" id="firstNum"  type="number" placeholder="Enter the first number here"><br><br>
+            <input oninput="debounceSum()" id="secondNum" type="number" placeholder="Enter the second number here"><br><br>
+            <!-- <button oninput="sum()">Calculate the Numbers</button> -->
+            <div id="finalsum"></div>
+        </body>
+    </head>
+</html>
